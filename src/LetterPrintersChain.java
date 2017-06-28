@@ -2,15 +2,15 @@
 public class LetterPrintersChain implements Runnable {
    public final char letter;
 	LetterPrintersChain printersChain;
-	//Thread thread;
+	Thread thread;
 	public LetterPrintersChain(char letter, LetterPrintersChain printersChain) {
 		super();
 		this.letter = letter;
 		this.printersChain = printersChain;
 		//Runnable target = new LetterPrintersChain(letter, printersChain);
 		
-		 new Thread(printersChain).start();
-		
+		 myThread = new Thread(printersChain);
+		  myThread.start();
 		 print();
 		
 	}
@@ -38,7 +38,7 @@ public class LetterPrintersChain implements Runnable {
 	 
 	 private void print() {
 		 
-		  Thread.interrupted();
+		  MyThread.interrupt();
 	   
 	}
 
@@ -48,16 +48,16 @@ public class LetterPrintersChain implements Runnable {
 
 	@Override
 	public void run() {
-		   
+		   while(true){
 			try {
 				
 				Thread.sleep(10000);
 				
 			} catch (InterruptedException e) {
 				System.out.println(letter);
-				;
 				
 				
+			}		
 			}
 		}
 	}
