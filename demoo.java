@@ -1,5 +1,3 @@
-import java.awt.print.Book;
-import java.lang.reflect.Array;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -7,7 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class demoo implements Runnable {
+public class demo implements Runnable {
 	private final static ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
 
 	private final static Lock readLock = readWriteLock.readLock();
@@ -17,7 +15,7 @@ public class demoo implements Runnable {
 	static Random random = new Random();
 
 	public static void main(String[] args) throws Exception {
-		demoo rt = new demoo();
+		demo rt = new demo();
 		ExecutorService ex = Executors.newFixedThreadPool(3);
 
 		Runnable task = new Runnable() {
@@ -30,24 +28,22 @@ public class demoo implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			};
-		
-			
-			Runnable task1 = new Runnable(){
+		};
 
-				@Override
-				public void run() {
-					try{
-						read();
-					}catch (InterruptedException e) {
-						e.printStackTrace();
-					
+		Runnable task1 = new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					read();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+
 				}
-				
+
 			}
-			};
-		
-		
+		};
+
 		ex.submit(task1);
 		ex.submit(task1);
 		ex.submit(task);
@@ -55,16 +51,16 @@ public class demoo implements Runnable {
 		ex.shutdown();
 		ex.shutdown();
 	}
-	
+
 	public static Runnable read() throws InterruptedException {
 		readLock.lock();
 		try {
 			for (int i = 0; i <= book.length; i++) {
 				System.out.println(book[i]);
-				System.out.println(Thread.currentThread().getName());
 
+				System.out.println(Thread.currentThread().getName());
+				Thread.sleep(1000);
 			}
-			Thread.sleep(1000);
 		} finally {
 			readLock.unlock();
 		}
